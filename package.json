@@ -1,0 +1,14 @@
+{
+  "name": "s3-replica",
+  "version": "1.0.0",
+  "description": "S3 fake server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Krzysztof Bukowski",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
