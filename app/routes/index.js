@@ -31,9 +31,13 @@ module.exports = function(config, router, logger) {
             var bucketName = getBucketName(req.headers.host);
             var object = getObject(bucketName, req.url);
 
-            logger.debug('Get object', { objectName: object });
+            logger.info('Get object', { objectName: object });
 
             fs.realpath(config.bucketsDir + object.path, function(err, path) {
+                if (err) {
+                    logger.error(err.message);
+                }
+
                 if (path !== undefined) {
                     res.set('Content-Type', object.contentType);
                     res.sendFile(path);
