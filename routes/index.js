@@ -13,7 +13,7 @@ function getObject(bucketName, object) {
     };
 }
 
-module.exports = function(router) {
+module.exports = function(config, router) {
     'use strict';
 
     router.route('/')
@@ -21,7 +21,7 @@ module.exports = function(router) {
             var bucketName = getBucketName(req.headers.host);
             console.log('Create bucket ' + bucketName);
 
-            fs.mkdir(__dirname + '/../buckets/' + bucketName, function(e){
+            fs.mkdir(config.bucketsDir + bucketName, function(e){
                 res.send();
             });
         });
@@ -31,7 +31,7 @@ module.exports = function(router) {
             var bucketName = getBucketName(req.headers.host);
             var object = getObject(bucketName, req.url);
 
-            fs.realpath(process.cwd() + '/buckets/' + object.path, function(err, path) {
+            fs.realpath(config.bucketsDir + object.path, function(err, path) {
                 if (path !== undefined) {
                     res.set('Content-Type', object.contentType);
                     res.sendFile(path);
