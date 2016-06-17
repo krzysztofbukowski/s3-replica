@@ -31,9 +31,8 @@ module.exports = function(router) {
             var bucketName = getBucketName(req.headers.host);
             var object = getObject(bucketName, req.url);
 
-            fs.realpath(__dirname + '/../buckets/' + object.path, function(err, path) {
-
-                if (path != undefined) {
+            fs.realpath(process.cwd() + '/buckets/' + object.path, function(err, path) {
+                if (path !== undefined) {
                     res.set('Content-Type', object.contentType);
                     res.sendFile(path);
                 } else {
