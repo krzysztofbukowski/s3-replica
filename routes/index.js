@@ -13,13 +13,13 @@ function getObject(bucketName, object) {
     };
 }
 
-module.exports = function(config, router) {
+module.exports = function(config, router, logger) {
     'use strict';
 
     router.route('/')
         .get(function(req, res) {
             var bucketName = getBucketName(req.headers.host);
-            console.log('Create bucket ' + bucketName);
+            logger.debug('Get bucket', { bucketName: bucketName });
 
             fs.mkdir(config.bucketsDir + bucketName, function(e){
                 res.send();
@@ -30,6 +30,8 @@ module.exports = function(config, router) {
         .get(function(req, res) {
             var bucketName = getBucketName(req.headers.host);
             var object = getObject(bucketName, req.url);
+
+            logger.debug('Get object', { objectName: object });
 
             fs.realpath(config.bucketsDir + object.path, function(err, path) {
                 if (path !== undefined) {
